@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  library-app:
+    build: .
+    container_name: library-management
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      - BOOKS_FILE=/data/books.json
+      - LIBRARY_ADMIN_USERNAME=admin
+      - LIBRARY_ADMIN_PASSWORD=admin123
+      - SESSION_COOKIE_SECURE=false
+    volumes:
+      - ./data:/data
