@@ -710,10 +710,12 @@ The CI/CD pipeline includes:
 
 Set these in your repository settings under Secrets and variables > Actions:
 
-- `SONAR_TOKEN`: SonarCloud authentication token
-- `DOCKER_USERNAME`: Docker Hub username
-- `DOCKER_PASSWORD`: Docker Hub password/access token
-- `RENDER_DEPLOY_HOOK`: Render deployment webhook URL
+- **`SONAR_TOKEN`**: SonarCloud authentication token
+- **`SONAR_PROJECT_KEY`**: Your SonarCloud project key
+- **`SONAR_ORG`**: Your SonarCloud organization key
+- **`DOCKERHUB_USERNAME`**: Docker Hub username
+- **`DOCKERHUB_TOKEN`**: Docker Hub access token
+- **`RENDER_DEPLOY_HOOK`**: Render deployment webhook URL
 
 ### Branch Protection
 
