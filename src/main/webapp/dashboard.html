@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2>📚 Library Management System</h2>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="add-book.html">Add Book</a>
+                <a href="view-books.html">View Books</a>
+                <a href="search-book.html">Search</a>
+                <a href="issue-return-book.html">Issue/Return</a>
+                <a href="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard">
+            <h1>Welcome to Library Management System</h1>
+            <p>Manage your library books efficiently with our digital management system.</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Books</h3>
+                    <p id="totalBooks" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Available Books</h3>
+                    <p id="availableBooks" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Issued Books</h3>
+                    <p id="issuedBooks" class="stat-number">0</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <button class="btn btn-primary" onclick="window.location.href='add-book.html'">Add New Book</button>
+                <button class="btn btn-info" onclick="window.location.href='view-books.html'">View All Books</button>
+                <button class="btn btn-warning" onclick="window.location.href='issue-return-book.html'">Issue/Return Book</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Load statistics on page load
+        window.onload = function() {
+            loadStatistics();
+        };
+
+        function loadStatistics() {
+            fetch('api/books?action=all')
+                .then(response => {
+                    console.log('Response status:', response.status, 'Content-Type:', response.headers.get('content-type'));
+                    
+                    if (response.status === 401) {
+                        alert('Session expired. Please login again.');
+                        window.location.href = 'index.html';
+                        return null;
+                    }
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('Response is not JSON. Received: ' + contentType);
+                    }
+                    
+                    return response.json();
+                })
+                .then(books => {
+                    if (books === null) return; // Session error already handled
+                    
+                    const total = books.length;
+                    const available = books.filter(b => !b.issued).length;
+                    const issued = books.filter(b => b.issued).length;
+
+                    document.getElementById('totalBooks').textContent = total;
+                    document.getElementById('availableBooks').textContent = available;
+                    document.getElementById('issuedBooks').textContent = issued;
+                })
+                .catch(error => {
+                    console.error('Error loading statistics:', error);
+                });
+        }
+    </script>
+</body>
+</html>

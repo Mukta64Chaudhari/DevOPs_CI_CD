@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  library-app:
+    build: .
+    container_name: library-management
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
