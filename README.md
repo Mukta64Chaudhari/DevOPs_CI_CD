@@ -1,5 +1,9 @@
 # Library Management System - Complete Web Application
 
+![CI/CD Pipeline](https://github.com/Mukta64Chaudhari/DevOPs_CI_CD/actions/workflows/ci.yml/badge.svg)
+
+**Pipeline:** Passing ✅ | **Deployment:** Live on Render ✅ | **Quality Gate:** SonarCloud ✅
+
 A modern, interactive web-based Library Management System built with Java Servlets, HTML5, CSS3, and JavaScript with Selenium testing.
 
 ## Project Overview
